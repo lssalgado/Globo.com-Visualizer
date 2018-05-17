@@ -9,6 +9,14 @@ var fork_amount = 0;
 var contributors_amount = 0;
 var commits_per_week = [];
 
+function feedPage() {
+
+    document.getElementById("stars").textContent = "Stars: " + star_amount;
+    document.getElementById("forks").textContent = "Forks: " + fork_amount;
+    document.getElementById("contributors").textContent = "Contributors: " + contributors_amount;
+
+}
+
 function getReposData() {
 
     reposToGet = document.getElementById("repos_select").value;
@@ -21,19 +29,24 @@ function getReposData() {
         .done(function () {
             contributors_amount = 0;
             $.get(url_repos_Gcom + reposToGet + "/contributors", function (data) {
-                data.forEach(function () {
-                    contributors_amount++;
-                });
+                if ($.isEmptyObject(data)) {
+                    contributors_amount = 0;
+                } else {
+                    data.forEach(function () {
+                        contributors_amount++;
+                    });
+                }
             })
                 .done(function () {
                     console.log("contributors_amount = " + contributors_amount);
 
                     $.get(url_repos_Gcom + reposToGet + "/stats/participation", function (data) {
-
                         commits_per_week = data.all;
                         console.log(commits_per_week);
-
                     })
+                        .done(function () {
+                            feedPage();
+                        })
                 });
         });
 
@@ -101,19 +114,21 @@ function getRepos() {
 
 function startPage() {
 
-    var central_div = document.createElement("div");
-    central_div.id = "central_div";
-    central_div.className = "central_div";
-    document.body.appendChild(central_div);
+    // var central_div = document.createElement("div");
+    // central_div.id = "central_div";
+    // central_div.className = "central_div";
+    // document.body.appendChild(central_div);
 
-    var select = document.createElement("select");
-    select.id = "repos_select"
-    select.onchange = getReposData;
-    document.getElementById("central_div").appendChild(select);
+    // var select = document.createElement("select");
+    // select.id = "repos_select"
+    // select.onchange = getReposData;
+    // document.getElementById("central_div").appendChild(select);
 
-    var temp_opt = document.createElement("option");
-    temp_opt.id = "temp_opt";
-    temp_opt.textContent = "Carregando";
-    document.getElementById("repos_select").appendChild(temp_opt);
+    // var temp_opt = document.createElement("option");
+    // temp_opt.id = "temp_opt";
+    // temp_opt.textContent = "Carregando";
+    // document.getElementById("repos_select").appendChild(temp_opt);
+
+    document.getElementById("repos_select").onchange = getReposData;
     getRepos();
 }
