@@ -114,21 +114,6 @@ function getRepos() {
 
 function startPage() {
 
-    // var central_div = document.createElement("div");
-    // central_div.id = "central_div";
-    // central_div.className = "central_div";
-    // document.body.appendChild(central_div);
-
-    // var select = document.createElement("select");
-    // select.id = "repos_select"
-    // select.onchange = getReposData;
-    // document.getElementById("central_div").appendChild(select);
-
-    // var temp_opt = document.createElement("option");
-    // temp_opt.id = "temp_opt";
-    // temp_opt.textContent = "Carregando";
-    // document.getElementById("repos_select").appendChild(temp_opt);
-
     document.getElementById("repos_select").onchange = getReposData;
     getRepos();
 }

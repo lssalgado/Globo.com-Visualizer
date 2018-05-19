@@ -1,24 +1,44 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="scripts/getterGcom.js"></script>
-    
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div id ="central_div" class="central_div">
-        <select id="repos_select" class="repos_select">
-            <option id="temp_opt"> Carregando </option>
-        </select>
-        <h1 id="stars">
-        </h1>
-        <h1 id="forks">
-        </h1>
-        <h1 id="contributors">
-        </h1>
 
-    </div>
-    <script>startPage();</script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="style/styleSass.css">
+</head>
+
+<body>
+    <section class="wrapper">
+        <div class="row">
+            <div id="central_div" class="column-3"></div>
+            <div id="central_div" class="column-6">
+
+                <select id="repos_select">
+                    <option id="temp_opt"> Carregando </option>
+                </select>
+
+                <h1 id="stars">
+                </h1>
+                <h1 id="forks">
+                </h1>
+                <h1 id="contributors">
+                </h1>
+                <tr>
+                    <h1>
+                    <!--<td class="icon">-->
+                        <i class="fas fa-star"></i>
+                    <!--</td>-->
+                    </h1>
+                </tr>
+            </div>
+        </div>
+    </section>
+    <script>
+        startPage();
+    </script>
 </body>
+
 </html>
