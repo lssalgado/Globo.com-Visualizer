@@ -22,23 +22,23 @@ var commit_counter = 0;
 var ctx = document.getElementById("myChart");
 
 function resetVar() {
-    url_repos_Gcom = "https://api.github.com/repos/globocom/";
-    ctual_page = 1;
-    ctual_element = 0;
-    com_repos = 0;
-    com_repos_array = [];
-    com_repos_json = {};
-    tar_amount = 0;
-    ork_amount = 0;
-    ontributors_amount = 0;
-    ommits_per_week = [];
-    ommits_per_month = [];
-    onth_list = [];
-    yChart = {};
-    eek = {};
-    ctual_month = 0;
-    ctual_month_name = "";
-    ommit_counter = 0;
+url_repos_Gcom = "https://api.github.com/repos/globocom/";
+actual_page = 1;
+actual_element = 0;
+gcom_repos = 0;
+gcom_repos_array = [];
+gcom_repos_json = {};
+star_amount = 0;
+fork_amount = 0;
+contributors_amount = 0;
+commits_per_week = [];
+commits_per_month = [];
+month_list = [];
+myChart = {};
+week = {};
+actual_month = 0;
+actual_month_name = "";
+commit_counter = 0;
 }
 
 function defineChartData() {
@@ -144,10 +144,17 @@ function getReposData() {
                     console.log("fork_amount = " + fork_amount);
 
                     $.get(url_repos_Gcom + reposToGet + "/stats/participation", function (data) {
+                        if(jQuery.isEmptyObject(data)){
+                            return false;
+                        } else {
                         commits_per_week = data.all;
                         console.log(url_repos_Gcom + reposToGet + "/stats/participation")
                         console.log(commits_per_week);
+                    };
                     })
+                        .fail(function(){
+                            getReposData();
+                        })
                         .done(function () {
                             feedPage();
                         })
@@ -218,6 +225,14 @@ function getRepos() {
 
 function startPage() {
 
+    $.ajax({
+        method: "POST",
+        url: "https://api.github.com/",
+        headers: {
+            // key value pair of headers
+            'Authorization': '5ef9a935fe3985c6a67cafcf73e78c4231e35ac0'
+      }
+    });
     document.getElementById("repos_select").onchange = getReposData;
     getRepos();
 }
