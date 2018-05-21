@@ -8,10 +8,25 @@
     }
      
 img {
-    width: auto;
-    max-width: 100%;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 10%;
     height: auto !important; 
     }   
+
+#images{
+    // border: solid;
+    text-align: center;
+}
+
+.bottom-right {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    float: left;
+}
  
 .wrapper {
     width: 100%;
@@ -41,7 +56,7 @@ img {
         }   
     }
 
-select, h1, tr, td, option {
+select, h1, td, option {
     display: block;
     margin: 0 auto;
     position: relative;
@@ -49,6 +64,11 @@ select, h1, tr, td, option {
 
 }
 
-td.icon{
-    text-align: center;
+#bordered{
+    border: solid;
+}
+
+#myChart{
+    width: 100%;
+    height: 20%;
 }

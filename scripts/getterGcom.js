@@ -8,12 +8,84 @@ var star_amount = 0;
 var fork_amount = 0;
 var contributors_amount = 0;
 var commits_per_week = [];
+const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+];
+var commits_per_month = [];
+var month_list = [];
+var myChart = {};
+var week = {};
+var actual_month = 0;
+var actual_month_name = "";
+var commit_counter = 0;
+
+var ctx = document.getElementById("myChart");
+
+function defineChartData() {
+
+    var actual_month = moment().month();
+    var actual_month_name = monthNames[actual_month] + "/" + moment().year();
+    var commit_counter = 0;
+    console.log(commits_per_week)
+
+    var size = commits_per_week.length;
+
+    commit_counter = commit_counter + commits_per_week[commits_per_week.length - 1];
+
+    for (i = commits_per_week.length - 1; i > 0; i--) {
+
+        commit_counter = commit_counter + commits_per_week[i - 1];
+        week = moment(moment().subtract((commits_per_week.length - i), 'weeks').calendar());
+
+        if (week.month() != actual_month) {
+            console.log("Month -> " + week.month())
+
+                commits_per_month.unshift(commit_counter);
+                month_list.unshift(actual_month_name);
+
+                commit_counter = 0;
+                actual_month = week.month();
+                actual_month_name = monthNames[actual_month]+ "/" + week.year();
+
+        }
+
+
+    }
+
+    console.log(commits_per_month);
+    console.log(month_list);
+
+}
 
 function feedPage() {
+
+    myChart = {};
 
     document.getElementById("stars").textContent = "Stars: " + star_amount;
     document.getElementById("forks").textContent = "Forks: " + fork_amount;
     document.getElementById("contributors").textContent = "Contributors: " + contributors_amount;
+
+    defineChartData();
+
+    var ctx = document.getElementById("myChart");
+    myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: month_list,
+            datasets: [{
+                label: 'Commits mensais',
+                data: commits_per_month,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+    });
+
 
 }
 
