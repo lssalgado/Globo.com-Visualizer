@@ -225,14 +225,7 @@ function getRepos() {
 
 function startPage() {
 
-    $.ajax({
-        method: "POST",
-        url: "https://api.github.com/",
-        headers: {
-            // key value pair of headers
-            'Authorization': '5ef9a935fe3985c6a67cafcf73e78c4231e35ac0'
-      }
-    });
+    
     document.getElementById("repos_select").onchange = getReposData;
     getRepos();
 }
