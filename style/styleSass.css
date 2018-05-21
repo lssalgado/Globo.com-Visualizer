@@ -23,6 +23,7 @@ img {
   margin-right: auto;
   width: 10%;
   height: auto !important;
+  float: left;
 }
 
 #images {
@@ -107,16 +108,27 @@ select, h1, td, option {
   display: block;
   margin: 0 auto;
   position: relative;
+  text-align: right;
+}
+
+h1 {
+  margin-right: 5px;
+}
+
+#title {
+  color: #0669DE;
   text-align: center;
 }
 
 #bordered {
   border: solid;
+  border-width: 1px;
+  outline: hidden;
 }
 
 #myChart {
   width: 100%;
-  height: 40%;
+  height: 20%;
 }
 
 /*# sourceMappingURL=styleSass.css.map */

@@ -1,3 +1,6 @@
+const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+];
 var url_repos_Gcom = "https://api.github.com/repos/globocom/";
 var actual_page = 1;
 var actual_element = 0;
@@ -8,9 +11,6 @@ var star_amount = 0;
 var fork_amount = 0;
 var contributors_amount = 0;
 var commits_per_week = [];
-const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
-];
 var commits_per_month = [];
 var month_list = [];
 var myChart = {};
@@ -20,6 +20,26 @@ var actual_month_name = "";
 var commit_counter = 0;
 
 var ctx = document.getElementById("myChart");
+
+function resetVar() {
+    url_repos_Gcom = "https://api.github.com/repos/globocom/";
+    ctual_page = 1;
+    ctual_element = 0;
+    com_repos = 0;
+    com_repos_array = [];
+    com_repos_json = {};
+    tar_amount = 0;
+    ork_amount = 0;
+    ontributors_amount = 0;
+    ommits_per_week = [];
+    ommits_per_month = [];
+    onth_list = [];
+    yChart = {};
+    eek = {};
+    ctual_month = 0;
+    ctual_month_name = "";
+    ommit_counter = 0;
+}
 
 function defineChartData() {
 
@@ -40,12 +60,12 @@ function defineChartData() {
         if (week.month() != actual_month) {
             console.log("Month -> " + week.month())
 
-                commits_per_month.unshift(commit_counter);
-                month_list.unshift(actual_month_name);
+            commits_per_month.unshift(commit_counter);
+            month_list.unshift(actual_month_name);
 
-                commit_counter = 0;
-                actual_month = week.month();
-                actual_month_name = monthNames[actual_month]+ "/" + week.year();
+            commit_counter = 0;
+            actual_month = week.month();
+            actual_month_name = monthNames[actual_month] + "/" + week.year();
 
         }
 
@@ -60,6 +80,13 @@ function defineChartData() {
 function feedPage() {
 
     myChart = {};
+
+    var temp_chart = document.getElementById("myChart")
+    temp_chart.parentNode.removeChild(temp_chart);
+
+    var canvas = document.createElement("canvas");
+    canvas.id = "myChart";
+    document.getElementById("chartContainer").appendChild(canvas);
 
     document.getElementById("stars").textContent = "Stars: " + star_amount;
     document.getElementById("forks").textContent = "Forks: " + fork_amount;
@@ -76,10 +103,10 @@ function feedPage() {
                 label: 'Commits mensais',
                 data: commits_per_month,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(6, 105, 222, 0.2)',
                 ],
                 borderColor: [
-                    'rgba(255,99,132,1)',
+                    'rgba(6, 105, 222, 1)',
                 ],
                 borderWidth: 1
             }]
@@ -90,6 +117,8 @@ function feedPage() {
 }
 
 function getReposData() {
+
+    resetVar();
 
     reposToGet = document.getElementById("repos_select").value;
     console.log(reposToGet);
@@ -111,9 +140,12 @@ function getReposData() {
             })
                 .done(function () {
                     console.log("contributors_amount = " + contributors_amount);
+                    console.log("star_amount = " + star_amount);
+                    console.log("fork_amount = " + fork_amount);
 
                     $.get(url_repos_Gcom + reposToGet + "/stats/participation", function (data) {
                         commits_per_week = data.all;
+                        console.log(url_repos_Gcom + reposToGet + "/stats/participation")
                         console.log(commits_per_week);
                     })
                         .done(function () {
